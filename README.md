@@ -3,7 +3,7 @@ Credit Card Fraud Detection – Project Documentation
 Credit Card Fraud Detection using Machine Learning
 
 👤 Team/Author:
-Sudalai Eswari S
+Maharaja S
 
 📌 Objective:
 To build a machine learning model that detects fraudulent credit card transactions with high accuracy and low false positive rate.
