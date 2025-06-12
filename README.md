@@ -1,47 +1,55 @@
-# Step 1: Import Libraries
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix, classification_report
+# 💳 Credit Card Fraud Detection
 
-# Step 2: Load Dataset
-df = pd.read_csv("creditcard.csv")  # Make sure creditcard.csv is uploaded
+This project builds a machine learning model to detect fraudulent credit card transactions using a real-world dataset. The goal is to accurately identify fraudulent transactions while minimizing false positives.
 
-# Step 3: Explore Data
-print("Shape of dataset:", df.shape)
-print("Class distribution:\n", df['Class'].value_counts())
-print("Missing values:\n", df.isnull().sum())
+---
 
-# Step 4: Preprocessing
-scaler = StandardScaler()
-df['Amount'] = scaler.fit_transform(df['Amount'].values.reshape(-1, 1))
-df = df.drop(['Time'], axis=1)
+## 📊 Dataset Information
 
-# Step 5: Split Data
-X = df.drop('Class', axis=1)
-y = df['Class']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+- **Source**: [Kaggle - Credit Card Fraud Detection](https://www.kaggle.com/mlg-ulb/creditcardfraud)
+- **Total Transactions**: 284,807
+- **Fraudulent Transactions**: 492 (~0.17%)
+- **Features**:
+  - `Time`, `Amount`, `V1` to `V28` (PCA-transformed)
+  - `Class`: 0 (Normal), 1 (Fraud)
 
-# Step 6: Train the Model
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
+---
 
-# Step 7: Predict
-y_pred = model.predict(X_test)
+## ⚙️ Technologies Used
 
-# Step 8: Evaluate the Model
-print("\nConfusion Matrix:")
-print(confusion_matrix(y_test, y_pred))
+- Python
+- Pandas, NumPy
+- Matplotlib, Seaborn
+- Scikit-learn
+- Google Colab / Jupyter Notebook
 
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
+---
 
-# Optional: Visualize Class Imbalance
-plt.figure(figsize=(6,4))
-sns.countplot(x='Class', data=df)
-plt.title('Class Distribution')
-plt.show()
+## 📌 Problem Statement
+
+Due to the extremely imbalanced dataset, detecting fraud is challenging. The objective is to build a classification model that can:
+- Accurately classify fraud cases
+- Minimize false positives (legit transactions marked as fraud)
+- Maximize recall (capture most frauds)
+
+---
+
+## 🧪 Project Workflow
+
+1. **Load and explore the dataset**
+2. **Preprocess data**
+   - Normalize `Amount`
+   - Drop `Time`
+3. **Train/Test split**
+4. **Train a Random Forest Classifier**
+5. **Evaluate using confusion matrix and classification report**
+6. **Visualize fraud distribution**
+
+---
+
+## 🚀 How to Run
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/credit-card-fraud-detection.git
+   cd credit-card-fraud-detection
