@@ -1,58 +1,28 @@
-Credit Card Fraud Detection – Project Documentation
-📘 Project Title:
-Credit Card Fraud Detection using Machine Learning
+Step 1: Import Libraries
+import pandas as pd import numpy as np import matplotlib.pyplot as plt import seaborn as sns from sklearn.preprocessing import StandardScaler from sklearn.model_selection import train_test_split from sklearn.ensemble import RandomForestClassifier from sklearn.metrics import confusion_matrix, classification_report
 
-👤 Team/Author:
-Maharaja S
+Step 2: Load Dataset
+df = pd.read_csv("creditcard.csv") # Make sure creditcard.csv is uploaded
 
-📌 Objective:
-To build a machine learning model that detects fraudulent credit card transactions with high accuracy and low false positive rate.
+Step 3: Explore Data
+print("Shape of dataset:", df.shape) print("Class distribution:\n", df['Class'].value_counts()) print("Missing values:\n", df.isnull().sum())
 
-📂 Dataset:
-Source: Kaggle Credit Card Fraud Detection Dataset
+Step 4: Preprocessing
+scaler = StandardScaler() df['Amount'] = scaler.fit_transform(df['Amount'].values.reshape(-1, 1)) df = df.drop(['Time'], axis=1)
 
-Size: 284,807 transactions
+Step 5: Split Data
+X = df.drop('Class', axis=1) y = df['Class'] X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-Features:
+Step 6: Train the Model
+model = RandomForestClassifier() model.fit(X_train, y_train)
 
-Time, Amount, V1–V28 (PCA anonymized features)
+Step 7: Predict
+y_pred = model.predict(X_test)
 
-Class: Target column (0 = Legitimate, 1 = Fraud)
+Step 8: Evaluate the Model
+print("\nConfusion Matrix:") print(confusion_matrix(y_test, y_pred))
 
-🧠 Technologies Used:
-Python
+print("\nClassification Report:") print(classification_report(y_test, y_pred))
 
-Pandas, NumPy (Data Handling)
-
-Matplotlib, Seaborn (Visualization)
-
-Scikit-learn (ML Algorithms)
-
-Google Colab (Execution)
-
-🔍 Exploratory Data Analysis (EDA):
-Highly imbalanced: ~0.17% are fraud cases.
-
-No missing values.
-
-Strong need for resampling or anomaly detection.
-
-⚙️ Preprocessing Steps:
-Dropped the Time column.
-
-Normalized Amount using StandardScaler.
-
-Split data into training and test sets (70/30).
-
-🤖 Machine Learning Model:
-Algorithm Used: Random Forest Classifier
-
-Why? Fast, accurate, handles imbalanced data reasonably well.
-
-📊 Evaluation Metrics:
-Confusion Matrix
-
-Precision / Recall / F1-Score
-
-Focused on Recall (catching frauds is more important than false alarms)
-
+Optional: Visualize Class Imbalance
+plt.figure(figsize=(6,4)) sns.countplot(x='Class', data=df) plt.title('Class Distribution') plt.show()
